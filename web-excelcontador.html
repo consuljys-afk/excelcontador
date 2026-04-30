@@ -1,0 +1,1440 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ExcelContador — Juan Carlos Ferreira</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #080f1e;
+      --surface: #0e1a2e;
+      --surface2: #162240;
+      --surface3: #1c2d50;
+      --green: #1a7c43;
+      --green-light: #22a55a;
+      --green-glow: rgba(26,124,67,0.25);
+      --gold: #f0c040;
+      --gold-light: #f5d060;
+      --blue-ig: #0095f6;
+      --white: #ffffff;
+      --gray1: #c8d8ec;
+      --gray2: #8fa8c8;
+      --gray3: #4a6080;
+      --border: rgba(255,255,255,0.07);
+      --radius: 16px;
+      --radius-sm: 10px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--green); border-radius: 3px; }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 0 2rem;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background 0.3s, backdrop-filter 0.3s, border-color 0.3s;
+      border-bottom: 1px solid transparent;
+    }
+
+    nav.scrolled {
+      background: rgba(8,15,30,0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-color: var(--border);
+    }
+
+    .nav-brand {
+      font-family: 'Sora', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--white);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-brand span {
+      color: var(--green-light);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--gray2);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--white); }
+
+    .nav-cta {
+      background: var(--green);
+      color: var(--white);
+      padding: 8px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 600;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .nav-cta:hover { background: var(--green-light); transform: translateY(-1px); }
+
+    .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--white); border-radius: 2px; transition: 0.3s; }
+
+    /* ─── HERO ─── */
+    #inicio {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 100px 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 60% at 70% 50%, rgba(26,124,67,0.12) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 50% at 20% 30%, rgba(0,149,246,0.08) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .hero-grid-dots {
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size: 32px 32px;
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3rem;
+      max-width: 900px;
+      width: 100%;
+    }
+
+    /* Instagram Card */
+    .ig-card {
+      background: linear-gradient(135deg, #1a2540 0%, #0f1928 100%);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 24px;
+      padding: 28px;
+      width: 100%;
+      max-width: 480px;
+      box-shadow:
+        0 40px 80px rgba(0,0,0,0.5),
+        0 0 0 1px rgba(26,124,67,0.15),
+        inset 0 1px 0 rgba(255,255,255,0.08);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ig-card::before {
+      content: '';
+      position: absolute;
+      top: -1px; left: -1px; right: -1px; bottom: -1px;
+      border-radius: 24px;
+      background: linear-gradient(135deg, rgba(26,124,67,0.3), transparent 50%, rgba(0,149,246,0.2));
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .ig-card > * { position: relative; z-index: 1; }
+
+    .ig-card-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .ig-avatar-wrap {
+      position: relative;
+      flex-shrink: 0;
+      width: 80px;
+      height: 80px;
+    }
+
+    .ig-avatar-ring {
+      position: absolute;
+      inset: -3px;
+      border-radius: 50%;
+      background: conic-gradient(
+        from 0deg,
+        #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%
+      );
+      animation: spin-ring 3s linear infinite;
+    }
+
+    @keyframes spin-ring {
+      to { transform: rotate(360deg); }
+    }
+
+    .ig-avatar-ring::after {
+      content: '';
+      position: absolute;
+      inset: 3px;
+      background: #1a2540;
+      border-radius: 50%;
+    }
+
+    .ig-avatar {
+      position: absolute;
+      inset: 3px;
+      border-radius: 50%;
+      object-fit: cover;
+      z-index: 1;
+    }
+
+    .ig-info { flex: 1; min-width: 0; }
+
+    .ig-name-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 2px;
+      flex-wrap: wrap;
+    }
+
+    .ig-name {
+      font-family: 'Sora', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--white);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .ig-verified {
+      width: 20px;
+      height: 20px;
+      background: linear-gradient(135deg, #0095f6, #0060c0);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 2px 8px rgba(0,149,246,0.4);
+    }
+
+    .ig-verified svg { width: 11px; height: 11px; fill: white; }
+
+    .ig-handle {
+      color: var(--blue-ig);
+      font-size: 0.8rem;
+      font-weight: 500;
+      text-decoration: none;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .ig-handle:hover { text-decoration: underline; }
+
+    .ig-category {
+      font-size: 0.75rem;
+      color: var(--gray2);
+      font-weight: 400;
+    }
+
+    .ig-stats {
+      display: flex;
+      gap: 0;
+      margin: 20px 0;
+      background: rgba(0,0,0,0.2);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+    }
+
+    .ig-stat {
+      flex: 1;
+      text-align: center;
+      padding: 14px 8px;
+      position: relative;
+    }
+
+    .ig-stat + .ig-stat::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 15%; bottom: 15%;
+      width: 1px;
+      background: var(--border);
+    }
+
+    .ig-stat-num {
+      font-family: 'Sora', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--white);
+      display: block;
+    }
+
+    .ig-stat-label {
+      font-size: 0.7rem;
+      color: var(--gray2);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .ig-bio {
+      font-size: 0.82rem;
+      color: var(--gray1);
+      line-height: 1.55;
+      margin-bottom: 16px;
+      padding: 12px 14px;
+      background: rgba(255,255,255,0.04);
+      border-radius: 10px;
+      border-left: 3px solid var(--green-light);
+    }
+
+    .ig-buttons {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    .ig-btn {
+      flex: 1;
+      padding: 9px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-align: center;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+    }
+
+    .ig-btn-primary {
+      background: var(--blue-ig);
+      color: white;
+    }
+
+    .ig-btn-primary:hover { background: #0080d4; }
+
+    .ig-btn-secondary {
+      background: rgba(255,255,255,0.08);
+      color: var(--white);
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .ig-btn-secondary:hover { background: rgba(255,255,255,0.14); }
+
+    .ig-mini-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 3px;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .ig-mini-grid img {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      display: block;
+      transition: opacity 0.2s;
+    }
+
+    .ig-mini-grid img:hover { opacity: 0.8; }
+
+    /* Hero bottom */
+    .hero-bottom {
+      text-align: center;
+    }
+
+    .hero-mission {
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(1.6rem, 4vw, 2.6rem);
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+
+    .hero-mission em {
+      font-style: normal;
+      color: var(--green-light);
+    }
+
+    .hero-community {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(26,124,67,0.15);
+      border: 1px solid rgba(26,124,67,0.3);
+      border-radius: 100px;
+      padding: 10px 22px;
+      font-size: 0.9rem;
+      color: var(--green-light);
+      font-weight: 600;
+      margin-bottom: 2rem;
+    }
+
+    .hero-community::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      background: var(--green-light);
+      border-radius: 50%;
+      animation: pulse-dot 1.8s ease-in-out infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.7); }
+    }
+
+    .hero-cta-group {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--green);
+      color: white;
+      padding: 14px 32px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary:hover {
+      background: var(--green-light);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(26,124,67,0.35);
+    }
+
+    .btn-outline {
+      border: 1px solid rgba(255,255,255,0.2);
+      color: var(--white);
+      padding: 14px 32px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-outline:hover {
+      background: rgba(255,255,255,0.06);
+      border-color: rgba(255,255,255,0.4);
+    }
+
+    /* ─── SECTIONS COMMON ─── */
+    section {
+      padding: 5rem 2rem;
+    }
+
+    .section-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--green-light);
+      margin-bottom: 12px;
+    }
+
+    .section-label::before {
+      content: '';
+      width: 20px;
+      height: 2px;
+      background: var(--green-light);
+      border-radius: 1px;
+    }
+
+    .section-title {
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+
+    .section-subtitle {
+      color: var(--gray2);
+      font-size: 1.05rem;
+      max-width: 520px;
+      line-height: 1.7;
+    }
+
+    /* ─── SOBRE MÍ ─── */
+    #sobre {
+      background: var(--surface);
+    }
+
+    .sobre-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .sobre-photo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(2, 180px);
+      gap: 8px;
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .sobre-photo-grid img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s, opacity 0.4s;
+    }
+
+    .sobre-photo-grid img:first-child {
+      grid-column: 1 / 3;
+      grid-row: 1 / 2;
+    }
+
+    .sobre-photo-grid img:hover { transform: scale(1.03); opacity: 0.9; }
+
+    .sobre-content { }
+
+    .sobre-text {
+      color: var(--gray1);
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+      font-size: 0.95rem;
+    }
+
+    .expertise-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 1.5rem;
+    }
+
+    .pill {
+      background: rgba(26,124,67,0.12);
+      border: 1px solid rgba(26,124,67,0.25);
+      color: var(--green-light);
+      padding: 6px 14px;
+      border-radius: 100px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    /* ─── SERVICIOS ─── */
+    #servicios { }
+
+    .servicios-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 3rem;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .servicios-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .servicio-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .servicio-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--green), var(--green-light));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s;
+    }
+
+    .servicio-card:hover {
+      border-color: rgba(26,124,67,0.3);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    }
+
+    .servicio-card:hover::before { transform: scaleX(1); }
+
+    .servicio-icon {
+      width: 52px;
+      height: 52px;
+      background: rgba(26,124,67,0.12);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 18px;
+      font-size: 1.4rem;
+    }
+
+    .servicio-title {
+      font-family: 'Sora', sans-serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+      margin-bottom: 10px;
+      color: var(--white);
+    }
+
+    .servicio-desc {
+      color: var(--gray2);
+      font-size: 0.875rem;
+      line-height: 1.65;
+    }
+
+    /* ─── GALERÍA ─── */
+    #galeria {
+      background: var(--surface);
+    }
+
+    .galeria-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .galeria-header .section-label {
+      justify-content: center;
+    }
+
+    .galeria-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-auto-rows: 220px;
+      gap: 12px;
+    }
+
+    .galeria-item {
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .galeria-item:nth-child(1) { grid-column: span 2; grid-row: span 2; }
+    .galeria-item:nth-child(5) { grid-column: span 2; }
+
+    .galeria-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s;
+    }
+
+    .galeria-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(8,15,30,0.8) 0%, transparent 50%);
+      opacity: 0;
+      transition: opacity 0.3s;
+      display: flex;
+      align-items: flex-end;
+      padding: 16px;
+    }
+
+    .galeria-overlay span {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: white;
+    }
+
+    .galeria-item:hover img { transform: scale(1.05); }
+    .galeria-item:hover .galeria-overlay { opacity: 1; }
+
+    /* ─── MÉTRICAS ─── */
+    #metricas {
+      background: linear-gradient(135deg, var(--surface2) 0%, var(--bg) 100%);
+    }
+
+    .metricas-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .metricas-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .metricas-header .section-label { justify-content: center; }
+
+    .metricas-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+      background: var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .metrica-item {
+      background: var(--surface);
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+      transition: background 0.2s;
+    }
+
+    .metrica-item:hover { background: var(--surface2); }
+
+    .metrica-num {
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      color: var(--white);
+      display: block;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .metrica-num em {
+      font-style: normal;
+      color: var(--green-light);
+    }
+
+    .metrica-label {
+      font-size: 0.8rem;
+      color: var(--gray2);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .redes-breakdown {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .red-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 10px 18px;
+      font-size: 0.85rem;
+    }
+
+    .red-badge-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+    }
+
+    .red-badge-num { font-weight: 700; color: var(--white); }
+    .red-badge-name { color: var(--gray2); }
+
+    /* ─── CONTACTO ─── */
+    #contacto {
+      background: var(--surface);
+    }
+
+    .contacto-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .contacto-left { }
+
+    .contacto-desc {
+      color: var(--gray2);
+      line-height: 1.75;
+      margin: 1.5rem 0 2rem;
+      font-size: 0.95rem;
+    }
+
+    .redes-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .red-link {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+      color: var(--gray1);
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 18px;
+      transition: all 0.2s;
+    }
+
+    .red-link:hover {
+      border-color: rgba(26,124,67,0.3);
+      color: var(--white);
+      transform: translateX(4px);
+    }
+
+    .red-link-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .red-link-text { flex: 1; }
+    .red-link-handle { font-size: 0.95rem; font-weight: 600; }
+    .red-link-platform { font-size: 0.75rem; color: var(--gray3); }
+    .red-link-arrow { color: var(--gray3); font-size: 0.8rem; }
+
+    .contacto-right {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 36px;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--gray2);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .form-input {
+      width: 100%;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 16px;
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-input:focus { border-color: var(--green-light); }
+    .form-input::placeholder { color: var(--gray3); }
+
+    textarea.form-input { resize: vertical; min-height: 100px; }
+
+    .form-submit {
+      width: 100%;
+      background: var(--green);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 14px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .form-submit:hover {
+      background: var(--green-light);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 20px rgba(26,124,67,0.3);
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 2rem;
+      text-align: center;
+    }
+
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-brand {
+      font-family: 'Sora', sans-serif;
+      font-weight: 700;
+      color: var(--white);
+      font-size: 1rem;
+    }
+
+    .footer-brand span { color: var(--green-light); }
+
+    .footer-copy {
+      font-size: 0.8rem;
+      color: var(--gray3);
+    }
+
+    .footer-ig-link {
+      color: var(--blue-ig);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .footer-ig-link:hover { text-decoration: underline; }
+
+    /* ─── ANIMATIONS ─── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .stagger .reveal:nth-child(1) { transition-delay: 0ms; }
+    .stagger .reveal:nth-child(2) { transition-delay: 100ms; }
+    .stagger .reveal:nth-child(3) { transition-delay: 200ms; }
+    .stagger .reveal:nth-child(4) { transition-delay: 300ms; }
+    .stagger .reveal:nth-child(5) { transition-delay: 400ms; }
+    .stagger .reveal:nth-child(6) { transition-delay: 500ms; }
+
+    /* Parallax layer */
+    .parallax-layer {
+      transition: transform 0.1s linear;
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      .nav-links, .nav-cta { display: none; }
+      .hamburger { display: flex; }
+
+      .sobre-grid { grid-template-columns: 1fr; }
+      .sobre-photo-grid { grid-template-rows: repeat(2, 140px); }
+      .servicios-grid { grid-template-columns: 1fr; }
+      .galeria-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 160px; }
+      .galeria-item:nth-child(1) { grid-column: span 2; grid-row: span 1; }
+      .galeria-item:nth-child(5) { grid-column: span 2; }
+      .metricas-grid { grid-template-columns: repeat(2, 1fr); }
+      .contacto-grid { grid-template-columns: 1fr; }
+      .footer-inner { flex-direction: column; text-align: center; }
+      .ig-mini-grid { grid-template-columns: repeat(3, 1fr); }
+      .ig-mini-grid img:nth-child(n+4) { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ─── NAV ─── -->
+  <nav id="nav">
+    <a href="#inicio" class="nav-brand">Excel<span>Contador</span></a>
+    <ul class="nav-links">
+      <li><a href="#sobre">Sobre mí</a></li>
+      <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#galeria">Galería</a></li>
+      <li><a href="#metricas">Stats</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+    <a href="https://www.instagram.com/excelcontador" target="_blank" class="nav-cta">Seguir en IG</a>
+    <div class="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <!-- ─── HERO ─── -->
+  <section id="inicio">
+    <div class="hero-bg"></div>
+    <div class="hero-grid-dots"></div>
+    <div class="hero-inner">
+
+      <!-- Instagram Card -->
+      <div class="ig-card reveal">
+        <div class="ig-card-header">
+          <div class="ig-avatar-wrap">
+            <div class="ig-avatar-ring"></div>
+            <img class="ig-avatar" src="assets/instagram/profile.jpg" alt="Juan Carlos Ferreira" onerror="this.src='data:image/svg+xml,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'80\' height=\'80\'><rect width=\'80\' height=\'80\' fill=\'%231a7c43\'/><text x=\'50%25\' y=\'55%25\' text-anchor=\'middle\' fill=\'white\' font-size=\'28\' font-family=\'sans-serif\'>JC</text></svg>'"/>
+          </div>
+          <div class="ig-info">
+            <div class="ig-name-row">
+              <span class="ig-name">Juan Carlos Ferreira</span>
+              <div class="ig-verified">
+                <svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              </div>
+            </div>
+            <a href="https://www.instagram.com/excelcontador" target="_blank" class="ig-handle">@excelcontador</a>
+            <span class="ig-category">Servicio empresarial · Paraguay</span>
+          </div>
+        </div>
+
+        <div class="ig-stats">
+          <div class="ig-stat">
+            <span class="ig-stat-num">212</span>
+            <span class="ig-stat-label">Posts</span>
+          </div>
+          <div class="ig-stat">
+            <span class="ig-stat-num">4,867</span>
+            <span class="ig-stat-label">Seguidores</span>
+          </div>
+          <div class="ig-stat">
+            <span class="ig-stat-num">392</span>
+            <span class="ig-stat-label">Siguiendo</span>
+          </div>
+        </div>
+
+        <div class="ig-bio">
+          📊 Contador Público · Asesoría contable y financiera<br/>
+          📋 Notas contables · Análisis de estados financieros<br/>
+          🇵🇾 Paraguay · Normativas MTESS y tributarias
+        </div>
+
+        <div class="ig-buttons">
+          <a href="#contacto" class="ig-btn ig-btn-primary">Contactar</a>
+          <a href="#servicios" class="ig-btn ig-btn-secondary">Ver servicios</a>
+          <a href="https://www.instagram.com/excelcontador" target="_blank" class="ig-btn ig-btn-secondary">Seguir</a>
+        </div>
+
+        <div class="ig-mini-grid">
+          <img src="assets/instagram/post-1.jpg" alt="Post" loading="lazy"/>
+          <img src="assets/instagram/post-2.jpg" alt="Post" loading="lazy"/>
+          <img src="assets/instagram/post-3.jpg" alt="Post" loading="lazy"/>
+          <img src="assets/instagram/post-4.jpg" alt="Post" loading="lazy"/>
+          <img src="assets/instagram/post-5.jpg" alt="Post" loading="lazy"/>
+          <img src="assets/instagram/post-6.jpg" alt="Post" loading="lazy"/>
+        </div>
+      </div>
+
+      <!-- Hero Bottom -->
+      <div class="hero-bottom reveal">
+        <h1 class="hero-mission">
+          Tu contador de confianza<br/>
+          <em>para cada decisión financiera</em>
+        </h1>
+        <div class="hero-community">
+          +5.600 personas en la comunidad
+        </div>
+        <div class="hero-cta-group">
+          <a href="#servicios" class="btn-primary">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+            Ver servicios
+          </a>
+          <a href="https://www.instagram.com/excelcontador" target="_blank" class="btn-outline">
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            Instagram
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── SOBRE MÍ ─── -->
+  <section id="sobre">
+    <div class="section-inner">
+      <div class="sobre-grid">
+        <div class="sobre-photo-grid reveal parallax-layer">
+          <img src="assets/instagram/post-7.jpg" alt="Trabajo contable" loading="lazy"/>
+          <img src="assets/instagram/post-8.jpg" alt="Asesoría" loading="lazy"/>
+          <img src="assets/instagram/post-9.jpg" alt="Análisis financiero" loading="lazy"/>
+          <img src="assets/instagram/post-10.jpg" alt="Documentación" loading="lazy"/>
+        </div>
+        <div class="sobre-content reveal">
+          <span class="section-label">Sobre mí</span>
+          <h2 class="section-title">Contador Público con pasión por los números</h2>
+          <p class="sobre-text">
+            Soy Juan Carlos Ferreira Ferreira, Contador Público con experiencia en asesoría contable y financiera para empresas en Paraguay. Me especializo en la generación de notas contables y análisis de estados financieros, siempre alineado a las normativas vigentes del país.
+          </p>
+          <p class="sobre-text">
+            A través de mi perfil comparto contenido educativo sobre contabilidad, actualizaciones del MTESS y herramientas prácticas para que empresas y profesionales tomen mejores decisiones financieras.
+          </p>
+          <div class="expertise-pills">
+            <span class="pill">Notas Contables</span>
+            <span class="pill">Estados Financieros</span>
+            <span class="pill">Normativas MTESS</span>
+            <span class="pill">Análisis de Balance</span>
+            <span class="pill">Flujo de Caja</span>
+            <span class="pill">Resolución 49/2026</span>
+            <span class="pill">Paraguay</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── SERVICIOS ─── -->
+  <section id="servicios">
+    <div class="section-inner">
+      <div class="servicios-header">
+        <div>
+          <span class="section-label">Servicios</span>
+          <h2 class="section-title">¿En qué puedo ayudarte?</h2>
+        </div>
+        <p class="section-subtitle">Servicios contables y financieros para empresas y profesionales en Paraguay.</p>
+      </div>
+      <div class="servicios-grid stagger">
+        <div class="servicio-card reveal">
+          <div class="servicio-icon">📋</div>
+          <h3 class="servicio-title">Notas Contables</h3>
+          <p class="servicio-desc">Generación de notas contables a partir de tus estados financieros. Recibo el material en el formato que manejes y entrego la documentación lista en PDF.</p>
+        </div>
+        <div class="servicio-card reveal">
+          <div class="servicio-icon">📊</div>
+          <h3 class="servicio-title">Análisis de Estados Financieros</h3>
+          <p class="servicio-desc">Análisis detallado de Balance General, Estado de Resultados, Flujo de Caja y Variación Neta. Con interpretación conforme a la Resolución 49/2026.</p>
+        </div>
+        <div class="servicio-card reveal">
+          <div class="servicio-icon">🤝</div>
+          <h3 class="servicio-title">Consultoría Contable</h3>
+          <p class="servicio-desc">Servicio integral de consultoría para empresas y profesionales. Orientación contable, tributaria y normativa adaptada a la realidad de tu negocio en Paraguay.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── GALERÍA ─── -->
+  <section id="galeria">
+    <div class="section-inner">
+      <div class="galeria-header">
+        <span class="section-label">Contenido</span>
+        <h2 class="section-title">Mi feed de Instagram</h2>
+      </div>
+      <div class="galeria-grid">
+        <div class="galeria-item reveal">
+          <img src="assets/instagram/post-1.jpg" alt="Post Instagram" loading="lazy"/>
+          <div class="galeria-overlay"><span>Ver en Instagram</span></div>
+        </div>
+        <div class="galeria-item reveal">
+          <img src="assets/instagram/post-2.jpg" alt="Post Instagram" loading="lazy"/>
+          <div class="galeria-overlay"><span>Ver en Instagram</span></div>
+        </div>
+        <div class="galeria-item reveal">
+          <img src="assets/instagram/post-3.jpg" alt="Post Instagram" loading="lazy"/>
+          <div class="galeria-overlay"><span>Ver en Instagram</span></div>
+        </div>
+        <div class="galeria-item reveal">
+          <img src="assets/instagram/post-4.jpg" alt="Post Instagram" loading="lazy"/>
+          <div class="galeria-overlay"><span>Ver en Instagram</span></div>
+        </div>
+        <div class="galeria-item reveal">
+          <img src="assets/instagram/post-5.jpg" alt="Post Instagram" loading="lazy"/>
+          <div class="galeria-overlay"><span>Ver en Instagram</span></div>
+        </div>
+        <div class="galeria-item reveal">
+          <img src="assets/instagram/post-6.jpg" alt="Post Instagram" loading="lazy"/>
+          <div class="galeria-overlay"><span>Ver en Instagram</span></div>
+        </div>
+        <div class="galeria-item reveal">
+          <img src="assets/instagram/post-7.jpg" alt="Post Instagram" loading="lazy"/>
+          <div class="galeria-overlay"><span>Ver en Instagram</span></div>
+        </div>
+        <div class="galeria-item reveal">
+          <img src="assets/instagram/post-8.jpg" alt="Post Instagram" loading="lazy"/>
+          <div class="galeria-overlay"><span>Ver en Instagram</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── MÉTRICAS ─── -->
+  <section id="metricas">
+    <div class="metricas-inner">
+      <div class="metricas-header">
+        <span class="section-label">Comunidad</span>
+        <h2 class="section-title">Números reales</h2>
+      </div>
+      <div class="metricas-grid stagger">
+        <div class="metrica-item reveal">
+          <span class="metrica-num" data-count="5663"><em>+</em>5.663</span>
+          <span class="metrica-label">Comunidad total</span>
+        </div>
+        <div class="metrica-item reveal">
+          <span class="metrica-num" data-count="4867">4.867</span>
+          <span class="metrica-label">Seguidores Instagram</span>
+        </div>
+        <div class="metrica-item reveal">
+          <span class="metrica-num" data-count="212">212</span>
+          <span class="metrica-label">Publicaciones</span>
+        </div>
+        <div class="metrica-item reveal">
+          <span class="metrica-num" data-count="796">796</span>
+          <span class="metrica-label">Seguidores Threads</span>
+        </div>
+      </div>
+      <div class="redes-breakdown">
+        <div class="red-badge">
+          <div class="red-badge-icon" style="background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)">📸</div>
+          <span class="red-badge-num">4.867</span>
+          <span class="red-badge-name">Instagram</span>
+        </div>
+        <div class="red-badge">
+          <div class="red-badge-icon" style="background:#000">🧵</div>
+          <span class="red-badge-num">796</span>
+          <span class="red-badge-name">Threads</span>
+        </div>
+        <div class="red-badge">
+          <div class="red-badge-icon" style="background:#ff0000">▶️</div>
+          <span class="red-badge-num">YouTube</span>
+          <span class="red-badge-name">Canal activo</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── CONTACTO ─── -->
+  <section id="contacto">
+    <div class="section-inner">
+      <div class="contacto-grid">
+        <div class="contacto-left reveal">
+          <span class="section-label">Contacto</span>
+          <h2 class="section-title">¿Necesitás servicios de consultoría?</h2>
+          <p class="contacto-desc">
+            Servicios de consultoría contable para empresas y profesionales. Escribime y te respondo a la brevedad.
+          </p>
+          <a href="mailto:consuljys@gmail.com" class="red-link" style="margin-bottom:4px">
+            <div class="red-link-icon" style="background:linear-gradient(135deg,#ea4335,#fbbc05)">✉️</div>
+            <div class="red-link-text">
+              <div class="red-link-handle">consuljys@gmail.com</div>
+              <div class="red-link-platform">Email directo</div>
+            </div>
+            <span class="red-link-arrow">→</span>
+          </a>
+          <div class="redes-list">
+            <a href="https://www.instagram.com/excelcontador" target="_blank" class="red-link">
+              <div class="red-link-icon" style="background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)">📸</div>
+              <div class="red-link-text">
+                <div class="red-link-handle">@excelcontador</div>
+                <div class="red-link-platform">Instagram</div>
+              </div>
+              <span class="red-link-arrow">→</span>
+            </a>
+            <a href="https://www.threads.com/@excelcontador" target="_blank" class="red-link">
+              <div class="red-link-icon" style="background:#000;border:1px solid rgba(255,255,255,0.1)">🧵</div>
+              <div class="red-link-text">
+                <div class="red-link-handle">@excelcontador</div>
+                <div class="red-link-platform">Threads</div>
+              </div>
+              <span class="red-link-arrow">→</span>
+            </a>
+            <a href="https://www.youtube.com/channel/UCIciV2kDvzrHdVvv2ZLGQRg" target="_blank" class="red-link">
+              <div class="red-link-icon" style="background:#ff0000">▶️</div>
+              <div class="red-link-text">
+                <div class="red-link-handle">Juan Carlos Ferreira</div>
+                <div class="red-link-platform">YouTube</div>
+              </div>
+              <span class="red-link-arrow">→</span>
+            </a>
+          </div>
+        </div>
+        <div class="contacto-right reveal">
+          <h3 style="font-family:'Sora',sans-serif;font-weight:700;margin-bottom:1.5rem;font-size:1.2rem">Enviame un mensaje</h3>
+          <form onsubmit="handleForm(event)" action="mailto:consuljys@gmail.com" method="post" enctype="text/plain">
+            <div class="form-group">
+              <label class="form-label">Nombre</label>
+              <input class="form-input" type="text" placeholder="Tu nombre completo" required/>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email</label>
+              <input class="form-input" type="email" placeholder="tu@email.com" required/>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Mensaje</label>
+              <textarea class="form-input" placeholder="¿En qué puedo ayudarte?" required></textarea>
+            </div>
+            <button type="submit" class="form-submit">Enviar mensaje →</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── FOOTER ─── -->
+  <footer>
+    <div class="footer-inner">
+      <span class="footer-brand">Excel<span>Contador</span></span>
+      <span class="footer-copy">© 2026 Juan Carlos Ferreira Ferreira · Paraguay</span>
+      <a href="https://www.instagram.com/excelcontador" target="_blank" class="footer-ig-link">
+        📸 @excelcontador
+      </a>
+    </div>
+  </footer>
+
+  <script>
+    // Nav scroll
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 30);
+    });
+
+    // Mobile menu
+    function toggleMenu() {
+      const links = document.querySelector('.nav-links');
+      const cta = document.querySelector('.nav-cta');
+      if (links.style.display === 'flex') {
+        links.style.display = 'none';
+        if (cta) cta.style.display = 'none';
+      } else {
+        links.style.display = 'flex';
+        links.style.flexDirection = 'column';
+        links.style.position = 'absolute';
+        links.style.top = '64px';
+        links.style.left = '0';
+        links.style.right = '0';
+        links.style.background = 'rgba(8,15,30,0.97)';
+        links.style.padding = '1rem 2rem';
+        links.style.borderBottom = '1px solid rgba(255,255,255,0.07)';
+      }
+    }
+
+    // Intersection Observer for reveal
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Counter animation
+    function animateCounter(el, target, suffix = '') {
+      const duration = 1800;
+      const start = performance.now();
+      const formatter = new Intl.NumberFormat('es-PY');
+
+      function update(now) {
+        const elapsed = now - start;
+        const progress = Math.min(elapsed / duration, 1);
+        const ease = 1 - Math.pow(1 - progress, 3);
+        const value = Math.round(ease * target);
+        el.textContent = (target > 1000 ? formatter.format(value) : value) + suffix;
+        if (progress < 1) requestAnimationFrame(update);
+      }
+
+      requestAnimationFrame(update);
+    }
+
+    const counterObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          const raw = el.dataset.count;
+          if (!raw) return;
+          const target = parseInt(raw);
+          const prefix = el.querySelector('em') ? el.querySelector('em').outerHTML : '';
+          animateCounter({ set textContent(v) {
+            el.innerHTML = prefix + v;
+          }}, target);
+          counterObserver.unobserve(el);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    document.querySelectorAll('[data-count]').forEach(el => counterObserver.observe(el));
+
+    // Parallax
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      document.querySelectorAll('.parallax-layer').forEach(el => {
+        const rect = el.getBoundingClientRect();
+        const center = rect.top + rect.height / 2;
+        const offset = (window.innerHeight / 2 - center) * 0.08;
+        el.style.transform = `translateY(${offset}px)`;
+      });
+    });
+
+    // Form handler
+    function handleForm(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector('.form-submit');
+      btn.textContent = '¡Mensaje enviado! ✓';
+      btn.style.background = '#22a55a';
+      setTimeout(() => {
+        btn.textContent = 'Enviar mensaje →';
+        btn.style.background = '';
+        e.target.reset();
+      }, 3000);
+    }
+  </script>
+</body>
+</html>
