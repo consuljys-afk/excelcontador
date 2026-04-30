@@ -1342,20 +1342,21 @@
         </div>
         <div class="contacto-right reveal">
           <h3 style="font-family:'Sora',sans-serif;font-weight:700;margin-bottom:1.5rem;font-size:1.2rem">Enviame un mensaje</h3>
-          <form onsubmit="handleForm(event)" action="mailto:consuljys@gmail.com" method="post" enctype="text/plain">
+          <form id="contactForm" action="https://formspree.io/f/xpqbzybj" method="POST">
+            <input type="hidden" name="_subject" value="Nuevo mensaje desde ExcelContador.com"/>
             <div class="form-group">
               <label class="form-label">Nombre</label>
-              <input class="form-input" type="text" placeholder="Tu nombre completo" required/>
+              <input class="form-input" type="text" name="nombre" placeholder="Tu nombre completo" required/>
             </div>
             <div class="form-group">
               <label class="form-label">Email</label>
-              <input class="form-input" type="email" placeholder="tu@email.com" required/>
+              <input class="form-input" type="email" name="email" placeholder="tu@email.com" required/>
             </div>
             <div class="form-group">
               <label class="form-label">Mensaje</label>
-              <textarea class="form-input" placeholder="¿En qué puedo ayudarte?" required></textarea>
+              <textarea class="form-input" name="mensaje" placeholder="¿En qué puedo ayudarte?" required></textarea>
             </div>
-            <button type="submit" class="form-submit">Enviar mensaje →</button>
+            <button type="submit" class="form-submit" id="submitBtn">Enviar mensaje →</button>
           </form>
         </div>
       </div>
@@ -1458,17 +1459,38 @@
       });
     });
 
-    // Form handler
-    function handleForm(e) {
-      e.preventDefault();
-      const btn = e.target.querySelector('.form-submit');
-      btn.textContent = '¡Mensaje enviado! ✓';
-      btn.style.background = '#22a55a';
-      setTimeout(() => {
-        btn.textContent = 'Enviar mensaje →';
-        btn.style.background = '';
-        e.target.reset();
-      }, 3000);
+    // Form handler — Formspree
+    const form = document.getElementById('contactForm');
+    const btn  = document.getElementById('submitBtn');
+    if (form) {
+      form.addEventListener('submit', async e => {
+        e.preventDefault();
+        btn.textContent = 'Enviando...';
+        btn.disabled = true;
+        try {
+          const res = await fetch(form.action, {
+            method: 'POST',
+            body: new FormData(form),
+            headers: { 'Accept': 'application/json' }
+          });
+          if (res.ok) {
+            btn.textContent = '¡Mensaje enviado! ✓';
+            btn.style.background = '#22a55a';
+            form.reset();
+          } else {
+            btn.textContent = 'Error al enviar. Intentá de nuevo.';
+            btn.style.background = '#e74c3c';
+          }
+        } catch {
+          btn.textContent = 'Error de conexión.';
+          btn.style.background = '#e74c3c';
+        }
+        btn.disabled = false;
+        setTimeout(() => {
+          btn.textContent = 'Enviar mensaje →';
+          btn.style.background = '';
+        }, 4000);
+      });
     }
   </script>
 </body>
