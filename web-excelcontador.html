@@ -680,63 +680,113 @@
       line-height: 1.65;
     }
 
-    /* ─── GALERÍA ─── */
+    /* ─── PLANILLAS ─── */
     #galeria {
       background: var(--surface);
     }
 
-    .galeria-header {
+    .planillas-header {
       text-align: center;
       margin-bottom: 3rem;
     }
 
-    .galeria-header .section-label {
-      justify-content: center;
-    }
+    .planillas-header .section-label { justify-content: center; }
 
-    .galeria-grid {
+    .planillas-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      grid-auto-rows: 220px;
-      gap: 12px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
     }
 
-    .galeria-item {
-      border-radius: var(--radius-sm);
-      overflow: hidden;
-      position: relative;
-      cursor: pointer;
-    }
-
-    .galeria-item:nth-child(1) { grid-column: span 2; grid-row: span 2; }
-    .galeria-item:nth-child(5) { grid-column: span 2; }
-
-    .galeria-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.5s;
-    }
-
-    .galeria-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(8,15,30,0.8) 0%, transparent 50%);
-      opacity: 0;
-      transition: opacity 0.3s;
+    .planilla-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 26px;
       display: flex;
-      align-items: flex-end;
-      padding: 16px;
+      flex-direction: column;
+      gap: 14px;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
     }
 
-    .galeria-overlay span {
-      font-size: 0.8rem;
+    .planilla-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--green), var(--green-light));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s;
+    }
+
+    .planilla-card:hover {
+      border-color: rgba(26,124,67,0.35);
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.35);
+    }
+
+    .planilla-card:hover::after { transform: scaleX(1); }
+
+    .planilla-icon {
+      width: 54px;
+      height: 54px;
+      background: linear-gradient(135deg, rgba(26,124,67,0.2), rgba(26,124,67,0.05));
+      border: 1px solid rgba(26,124,67,0.2);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+
+    .planilla-title {
+      font-family: 'Sora', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--white);
+      line-height: 1.3;
+    }
+
+    .planilla-desc {
+      color: var(--gray2);
+      font-size: 0.855rem;
+      line-height: 1.65;
+      flex: 1;
+    }
+
+    .planilla-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .planilla-tag {
+      font-size: 0.7rem;
       font-weight: 600;
-      color: white;
+      padding: 4px 10px;
+      border-radius: 100px;
+      background: rgba(26,124,67,0.12);
+      color: var(--green-light);
+      border: 1px solid rgba(26,124,67,0.2);
+      letter-spacing: 0.03em;
     }
 
-    .galeria-item:hover img { transform: scale(1.05); }
-    .galeria-item:hover .galeria-overlay { opacity: 1; }
+    .planilla-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--green-light);
+      text-decoration: none;
+      margin-top: 4px;
+      transition: gap 0.2s;
+    }
+
+    .planilla-link:hover { gap: 10px; }
 
     /* ─── MÉTRICAS ─── */
     #metricas {
@@ -1025,9 +1075,7 @@
       .sobre-grid { grid-template-columns: 1fr; }
       .sobre-photo-grid { grid-template-rows: repeat(2, 140px); }
       .servicios-grid { grid-template-columns: 1fr; }
-      .galeria-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 160px; }
-      .galeria-item:nth-child(1) { grid-column: span 2; grid-row: span 1; }
-      .galeria-item:nth-child(5) { grid-column: span 2; }
+      .planillas-grid { grid-template-columns: 1fr; }
       .metricas-grid { grid-template-columns: repeat(2, 1fr); }
       .contacto-grid { grid-template-columns: 1fr; }
       .footer-inner { flex-direction: column; text-align: center; }
@@ -1044,7 +1092,7 @@
     <ul class="nav-links">
       <li><a href="#sobre">Sobre mí</a></li>
       <li><a href="#servicios">Servicios</a></li>
-      <li><a href="#galeria">Galería</a></li>
+      <li><a href="#galeria">Planillas</a></li>
       <li><a href="#metricas">Stats</a></li>
       <li><a href="#contacto">Contacto</a></li>
     </ul>
@@ -1204,46 +1252,91 @@
     </div>
   </section>
 
-  <!-- ─── GALERÍA ─── -->
+  <!-- ─── PLANILLAS ─── -->
   <section id="galeria">
     <div class="section-inner">
-      <div class="galeria-header">
-        <span class="section-label">Contenido</span>
-        <h2 class="section-title">Mi feed de Instagram</h2>
+      <div class="planillas-header">
+        <span class="section-label">Excel para Contadores del Paraguay</span>
+        <h2 class="section-title">Planillas que ofrecemos</h2>
+        <p style="color:var(--gray2);margin-top:0.75rem;font-size:0.95rem">Herramientas en Excel automatizadas para contadores y empresas en Paraguay.</p>
       </div>
-      <div class="galeria-grid">
-        <div class="galeria-item reveal">
-          <img src="assets/instagram/post-1.jpg" alt="Post Instagram" loading="lazy"/>
-          <div class="galeria-overlay"><span>Ver en Instagram</span></div>
+      <div class="planillas-grid stagger">
+
+        <div class="planilla-card reveal">
+          <div class="planilla-icon">🧾</div>
+          <div class="planilla-title">Formularios Marangatu — IVA, IRE e IRP</div>
+          <p class="planilla-desc">Generá automáticamente los formularios 120 IVA General, 501 IRE Simple, 515 IRP RSP y 516 IRP RGC con solo pegar los comprobantes descargados del sistema Marangatu.</p>
+          <div class="planilla-tags">
+            <span class="planilla-tag">IVA 120</span>
+            <span class="planilla-tag">IRE 501</span>
+            <span class="planilla-tag">IRP 515/516</span>
+            <span class="planilla-tag">Marangatu</span>
+          </div>
+          <a href="https://www.facebook.com/excelcontablepy/" target="_blank" class="planilla-link">Ver en Facebook →</a>
         </div>
-        <div class="galeria-item reveal">
-          <img src="assets/instagram/post-2.jpg" alt="Post Instagram" loading="lazy"/>
-          <div class="galeria-overlay"><span>Ver en Instagram</span></div>
+
+        <div class="planilla-card reveal">
+          <div class="planilla-icon">📒</div>
+          <div class="planilla-title">Libro de Ventas, Ingresos, Compras y Egresos</div>
+          <p class="planilla-desc">Generá en forma automática el Libro de Ventas-Ingresos y Compras-Egresos según la Resolución 90. Incluye video guía paso a paso para su uso.</p>
+          <div class="planilla-tags">
+            <span class="planilla-tag">Resolución 90</span>
+            <span class="planilla-tag">Libro de Ventas</span>
+            <span class="planilla-tag">Libro de Compras</span>
+          </div>
+          <a href="https://www.facebook.com/excelcontablepy/" target="_blank" class="planilla-link">Ver en Facebook →</a>
         </div>
-        <div class="galeria-item reveal">
-          <img src="assets/instagram/post-3.jpg" alt="Post Instagram" loading="lazy"/>
-          <div class="galeria-overlay"><span>Ver en Instagram</span></div>
+
+        <div class="planilla-card reveal">
+          <div class="planilla-icon">🗂️</div>
+          <div class="planilla-title">Registro de Comprobantes para Marangatu</div>
+          <p class="planilla-desc">Planilla para el registro de comprobantes destinados al Marangatu, conforme a la RG 90 y el Decreto 8175. Simplificá el proceso de carga y control.</p>
+          <div class="planilla-tags">
+            <span class="planilla-tag">RG 90</span>
+            <span class="planilla-tag">Decreto 8175</span>
+            <span class="planilla-tag">Marangatu</span>
+          </div>
+          <a href="https://www.facebook.com/excelcontablepy/" target="_blank" class="planilla-link">Ver en Facebook →</a>
         </div>
-        <div class="galeria-item reveal">
-          <img src="assets/instagram/post-4.jpg" alt="Post Instagram" loading="lazy"/>
-          <div class="galeria-overlay"><span>Ver en Instagram</span></div>
+
+        <div class="planilla-card reveal">
+          <div class="planilla-icon">💰</div>
+          <div class="planilla-title">Liquidación de Salarios</div>
+          <p class="planilla-desc">Planilla para calcular e imprimir la liquidación de salarios, aguinaldos y aportes IPS. Compatible con el sistema REOP del MTESS para la comunicación de liquidaciones.</p>
+          <div class="planilla-tags">
+            <span class="planilla-tag">MTESS</span>
+            <span class="planilla-tag">IPS</span>
+            <span class="planilla-tag">REOP</span>
+            <span class="planilla-tag">Aguinaldo</span>
+          </div>
+          <a href="https://www.facebook.com/excelcontablepy/" target="_blank" class="planilla-link">Ver en Facebook →</a>
         </div>
-        <div class="galeria-item reveal">
-          <img src="assets/instagram/post-5.jpg" alt="Post Instagram" loading="lazy"/>
-          <div class="galeria-overlay"><span>Ver en Instagram</span></div>
+
+        <div class="planilla-card reveal">
+          <div class="planilla-icon">📋</div>
+          <div class="planilla-title">Libros Laborales Automáticos</div>
+          <p class="planilla-desc">Planilla automática para imprimir los Libros Laborales exigidos por el Código del Trabajo. Generá los registros de personal con datos actualizados sin esfuerzo.</p>
+          <div class="planilla-tags">
+            <span class="planilla-tag">Libros Laborales</span>
+            <span class="planilla-tag">Código Laboral</span>
+            <span class="planilla-tag">MTESS</span>
+          </div>
+          <a href="https://www.facebook.com/excelcontablepy/" target="_blank" class="planilla-link">Ver en Facebook →</a>
         </div>
-        <div class="galeria-item reveal">
-          <img src="assets/instagram/post-6.jpg" alt="Post Instagram" loading="lazy"/>
-          <div class="galeria-overlay"><span>Ver en Instagram</span></div>
+
+        <div class="planilla-card reveal">
+          <div class="planilla-icon">📊</div>
+          <div class="planilla-title">Análisis de Estados Financieros y Notas Contables</div>
+          <p class="planilla-desc">Análisis de Balance General, Estado de Resultados, Flujo de Caja y Variación Neta. Genera notas contables en PDF conforme a la Resolución 49/2026.</p>
+          <div class="planilla-tags">
+            <span class="planilla-tag">Resolución 49/2026</span>
+            <span class="planilla-tag">Balance</span>
+            <span class="planilla-tag">Flujo de Caja</span>
+            <span class="planilla-tag">Notas Contables</span>
+          </div>
+          <a href="https://www.facebook.com/excelcontablepy/" target="_blank" class="planilla-link">Ver en Facebook →</a>
         </div>
-        <div class="galeria-item reveal">
-          <img src="assets/instagram/post-7.jpg" alt="Post Instagram" loading="lazy"/>
-          <div class="galeria-overlay"><span>Ver en Instagram</span></div>
-        </div>
-        <div class="galeria-item reveal">
-          <img src="assets/instagram/post-8.jpg" alt="Post Instagram" loading="lazy"/>
-          <div class="galeria-overlay"><span>Ver en Instagram</span></div>
-        </div>
+
       </div>
     </div>
   </section>
