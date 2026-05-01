@@ -318,14 +318,27 @@
     }
 
     .ig-bio {
+      margin-bottom: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .ig-bio-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255,255,255,0.07);
+      border-radius: 10px;
+      padding: 11px 14px;
       font-size: 0.92rem;
       color: #ddeeff;
-      line-height: 1.75;
-      margin-bottom: 18px;
-      padding: 14px 16px;
-      background: rgba(255,255,255,0.07);
-      border-radius: 12px;
-      border-left: 3px solid var(--green-light);
+      font-weight: 500;
+      line-height: 1.4;
+    }
+
+    .ig-bio-item span {
+      color: #ffffff;
     }
 
     .ig-buttons {
@@ -1066,9 +1079,9 @@
         </div>
 
         <div class="ig-bio">
-          🎓 Lic. Administración · Esp. Auditoría y Gestión Tributaria<br/>
-          📊 Notas contables · Análisis de estados financieros<br/>
-          🇵🇾 Paraguay · Normativas MTESS y tributarias
+          <div class="ig-bio-item">🎓 <span>Lic. Administración · Esp. Auditoría y Gestión Tributaria</span></div>
+          <div class="ig-bio-item">📊 <span>Notas contables · Análisis de estados financieros</span></div>
+          <div class="ig-bio-item">🇵🇾 <span>Paraguay · Normativas MTESS y tributarias</span></div>
         </div>
 
         <div class="ig-buttons">
