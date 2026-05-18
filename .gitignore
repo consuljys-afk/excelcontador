@@ -3,3 +3,7 @@ scrape-instagram.js
 profile-data.json
 package.json
 package-lock.json
+
+# macOS metadata
+.DS_Store
+._*
