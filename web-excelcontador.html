@@ -11,21 +11,21 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #080f1e;
-      --surface: #0e1a2e;
-      --surface2: #162240;
-      --surface3: #1c2d50;
-      --green: #1a7c43;
-      --green-light: #22a55a;
-      --green-glow: rgba(26,124,67,0.25);
-      --gold: #f0c040;
-      --gold-light: #f5d060;
-      --blue-ig: #0095f6;
+      --bg: #0a1a3a;
+      --surface: #122855;
+      --surface2: #1a3470;
+      --surface3: #234080;
+      --green: #d4af37;
+      --green-light: #f0c948;
+      --green-glow: rgba(212,175,55,0.25);
+      --gold: #f0c948;
+      --gold-light: #ffd966;
+      --blue-ig: #d4af37;
       --white: #ffffff;
-      --gray1: #c8d8ec;
-      --gray2: #8fa8c8;
-      --gray3: #4a6080;
-      --border: rgba(255,255,255,0.07);
+      --gray1: #e8d9b5;
+      --gray2: #b8a878;
+      --gray3: #6a5a3a;
+      --border: rgba(212,175,55,0.12);
       --radius: 16px;
       --radius-sm: 10px;
     }
@@ -60,7 +60,7 @@
     }
 
     nav.scrolled {
-      background: rgba(8,15,30,0.85);
+      background: rgba(10,26,58,0.85);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       border-color: var(--border);
@@ -99,12 +99,12 @@
 
     .nav-cta {
       background: var(--green);
-      color: var(--white);
+      color: var(--bg);
       padding: 8px 20px;
       border-radius: 8px;
       text-decoration: none;
       font-size: 0.875rem;
-      font-weight: 600;
+      font-weight: 700;
       transition: background 0.2s, transform 0.2s;
     }
 
@@ -128,8 +128,8 @@
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(ellipse 60% 60% at 70% 50%, rgba(26,124,67,0.12) 0%, transparent 70%),
-        radial-gradient(ellipse 40% 50% at 20% 30%, rgba(0,149,246,0.08) 0%, transparent 60%);
+        radial-gradient(ellipse 60% 60% at 70% 50%, rgba(212,175,55,0.12) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 50% at 20% 30%, rgba(212,175,55,0.08) 0%, transparent 60%);
       pointer-events: none;
     }
 
@@ -162,7 +162,7 @@
       max-width: 500px;
       box-shadow:
         0 40px 80px rgba(0,0,0,0.5),
-        0 0 0 1px rgba(26,124,67,0.15),
+        0 0 0 1px rgba(212,175,55,0.15),
         inset 0 1px 0 rgba(255,255,255,0.08);
       position: relative;
       overflow: hidden;
@@ -173,7 +173,7 @@
       position: absolute;
       top: -1px; left: -1px; right: -1px; bottom: -1px;
       border-radius: 24px;
-      background: linear-gradient(135deg, rgba(26,124,67,0.3), transparent 50%, rgba(0,149,246,0.2));
+      background: linear-gradient(135deg, rgba(212,175,55,0.3), transparent 50%, rgba(212,175,55,0.2));
       z-index: 0;
       pointer-events: none;
     }
@@ -248,13 +248,13 @@
     .ig-verified {
       width: 20px;
       height: 20px;
-      background: linear-gradient(135deg, #0095f6, #0060c0);
+      background: linear-gradient(135deg, #d4af37, #a8851f);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
-      box-shadow: 0 2px 8px rgba(0,149,246,0.4);
+      box-shadow: 0 2px 8px rgba(212,175,55,0.4);
     }
 
     .ig-verified svg { width: 11px; height: 11px; fill: white; }
@@ -431,8 +431,8 @@
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      background: rgba(26,124,67,0.15);
-      border: 1px solid rgba(26,124,67,0.3);
+      background: rgba(212,175,55,0.15);
+      border: 1px solid rgba(212,175,55,0.3);
       border-radius: 100px;
       padding: 10px 22px;
       font-size: 0.9rem;
@@ -464,7 +464,7 @@
 
     .btn-primary {
       background: var(--green);
-      color: white;
+      color: var(--bg);
       padding: 14px 32px;
       border-radius: 10px;
       text-decoration: none;
@@ -479,11 +479,11 @@
     .btn-primary:hover {
       background: var(--green-light);
       transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(26,124,67,0.35);
+      box-shadow: 0 8px 24px rgba(212,175,55,0.35);
     }
 
     .btn-outline {
-      border: 1px solid rgba(255,255,255,0.2);
+      border: 1px solid rgba(212,175,55,0.4);
       color: var(--white);
       padding: 14px 32px;
       border-radius: 10px;
@@ -497,8 +497,9 @@
     }
 
     .btn-outline:hover {
-      background: rgba(255,255,255,0.06);
-      border-color: rgba(255,255,255,0.4);
+      background: rgba(212,175,55,0.08);
+      border-color: rgba(212,175,55,0.7);
+      color: var(--gold-light);
     }
 
     /* ─── SECTIONS COMMON ─── */
@@ -598,8 +599,8 @@
     }
 
     .pill {
-      background: rgba(26,124,67,0.12);
-      border: 1px solid rgba(26,124,67,0.25);
+      background: rgba(212,175,55,0.12);
+      border: 1px solid rgba(212,175,55,0.25);
       color: var(--green-light);
       padding: 6px 14px;
       border-radius: 100px;
@@ -647,7 +648,7 @@
     }
 
     .servicio-card:hover {
-      border-color: rgba(26,124,67,0.3);
+      border-color: rgba(212,175,55,0.3);
       transform: translateY(-4px);
       box-shadow: 0 20px 40px rgba(0,0,0,0.3);
     }
@@ -657,7 +658,7 @@
     .servicio-icon {
       width: 52px;
       height: 52px;
-      background: rgba(26,124,67,0.12);
+      background: rgba(212,175,55,0.12);
       border-radius: 12px;
       display: flex;
       align-items: center;
@@ -723,7 +724,7 @@
     }
 
     .planilla-card:hover {
-      border-color: rgba(26,124,67,0.35);
+      border-color: rgba(212,175,55,0.35);
       transform: translateY(-5px);
       box-shadow: 0 20px 40px rgba(0,0,0,0.35);
     }
@@ -733,8 +734,8 @@
     .planilla-icon {
       width: 54px;
       height: 54px;
-      background: linear-gradient(135deg, rgba(26,124,67,0.2), rgba(26,124,67,0.05));
-      border: 1px solid rgba(26,124,67,0.2);
+      background: linear-gradient(135deg, rgba(212,175,55,0.2), rgba(212,175,55,0.05));
+      border: 1px solid rgba(212,175,55,0.2);
       border-radius: 14px;
       display: flex;
       align-items: center;
@@ -768,9 +769,9 @@
       font-weight: 600;
       padding: 4px 10px;
       border-radius: 100px;
-      background: rgba(26,124,67,0.12);
+      background: rgba(212,175,55,0.12);
       color: var(--green-light);
-      border: 1px solid rgba(26,124,67,0.2);
+      border: 1px solid rgba(212,175,55,0.2);
       letter-spacing: 0.03em;
     }
 
@@ -919,7 +920,7 @@
     }
 
     .red-link:hover {
-      border-color: rgba(26,124,67,0.3);
+      border-color: rgba(212,175,55,0.3);
       color: var(--white);
       transform: translateX(4px);
     }
@@ -982,7 +983,7 @@
     .form-submit {
       width: 100%;
       background: var(--green);
-      color: white;
+      color: var(--bg);
       border: none;
       border-radius: 10px;
       padding: 14px;
@@ -996,7 +997,7 @@
     .form-submit:hover {
       background: var(--green-light);
       transform: translateY(-1px);
-      box-shadow: 0 8px 20px rgba(26,124,67,0.3);
+      box-shadow: 0 8px 20px rgba(212,175,55,0.3);
     }
 
     /* ─── FOOTER ─── */
@@ -1082,6 +1083,65 @@
       .ig-mini-grid { grid-template-columns: repeat(3, 1fr); }
       .ig-mini-grid img:nth-child(n+4) { display: none; }
     }
+
+    /* ─── HERO JYS ANIMATION ─── */
+    .jys4{position:relative;width:100%;max-width:1200px;aspect-ratio:16/9;background:#0a1a3a;border-radius:16px;overflow:hidden;font-family:Georgia,'Times New Roman',serif;min-height:420px;box-shadow:0 40px 80px rgba(0,0,0,.5),0 0 0 1px rgba(212,175,55,.2)}
+    @keyframes jys4Fade{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes jys4Glow{0%,100%{text-shadow:0 0 20px rgba(212,175,55,.4)}50%{text-shadow:0 0 35px rgba(212,175,55,.8)}}
+    @keyframes jys4Rise{from{height:0;opacity:0}}
+    @keyframes jys4Float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+    @keyframes jys4Drift{0%{transform:translateY(0);opacity:0}15%{opacity:.7}85%{opacity:.7}100%{transform:translateY(-280px);opacity:0}}
+    @keyframes jys4Pulse{0%,100%{opacity:.5}50%{opacity:1}}
+    @keyframes jys4Sweep{0%{transform:translateX(-100%)}100%{transform:translateX(120vw)}}
+    @keyframes jys4Bg{0%,100%{opacity:.4}50%{opacity:.7}}
+    @keyframes jys4SlideIn{from{opacity:0;transform:translateX(-20px)}to{opacity:1;transform:translateX(0)}}
+    .jys4-bg{position:absolute;inset:0;background:radial-gradient(ellipse at center top,rgba(212,175,55,.18),transparent 60%);animation:jys4Bg 5s ease-in-out infinite}
+    .jys4-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(212,175,55,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(212,175,55,.04) 1px,transparent 1px);background-size:60px 60px;opacity:.6}
+    .jys4-sweep{position:absolute;top:0;bottom:0;width:300px;background:linear-gradient(90deg,transparent,rgba(212,175,55,.08),transparent);animation:jys4Sweep 8s ease-in-out infinite;pointer-events:none}
+    .jys4-corner{position:absolute;width:50px;height:50px;border:1.5px solid #d4af37;opacity:.7}
+    .jys4-corner.tl{top:20px;left:20px;border-right:none;border-bottom:none}
+    .jys4-corner.tr{top:20px;right:20px;border-left:none;border-bottom:none}
+    .jys4-corner.bl{bottom:20px;left:20px;border-right:none;border-top:none}
+    .jys4-corner.br{bottom:20px;right:20px;border-left:none;border-top:none}
+    .jys4-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 5%;z-index:5}
+    .jys4-eyebrow{display:flex;align-items:center;justify-content:center;gap:clamp(16px,3vw,32px);margin:0 0 28px;flex-wrap:wrap;animation:jys4Fade 1s ease-out both;animation-delay:.2s}
+    .jys4-eyebrow .word{color:#ffd966;font-size:clamp(16px,2.6vw,24px);font-weight:600;font-family:'Helvetica Neue',Arial,sans-serif;letter-spacing:.04em;text-transform:uppercase;animation:jys4SlideIn .8s ease-out both}
+    .jys4-eyebrow .word:nth-child(1){animation-delay:.3s}
+    .jys4-eyebrow .word:nth-child(3){animation-delay:.5s}
+    .jys4-eyebrow .word:nth-child(5){animation-delay:.7s}
+    .jys4-eyebrow .sep{width:8px;height:8px;background:#d4af37;border-radius:50%;flex-shrink:0;animation:jys4Pulse 2s ease-in-out infinite}
+    .jys4-logo{color:#f0c948;font-size:clamp(38px,7vw,80px);font-weight:700;letter-spacing:.05em;margin:0;font-family:Georgia,'Times New Roman',serif;animation:jys4Fade 1.2s ease-out both,jys4Glow 4s ease-in-out 1.5s infinite;animation-delay:.6s;line-height:1}
+    .jys4-rule{display:block;width:clamp(120px,25vw,260px);height:2px;background:linear-gradient(90deg,transparent,#d4af37,transparent);margin:18px auto;animation:jys4Fade 1s ease-out both;animation-delay:1.2s}
+    .jys4-tag{color:#ffffff;font-size:clamp(13px,2vw,18px);font-weight:400;letter-spacing:.08em;margin:0;font-family:'Helvetica Neue',Arial,sans-serif;animation:jys4Fade 1s ease-out both;animation-delay:1.5s;line-height:1.5}
+    .jys4-tag b{color:#d4af37;font-weight:500}
+    .jys4-services{position:absolute;left:0;right:0;bottom:8%;display:flex;justify-content:center;flex-wrap:wrap;gap:clamp(12px,3vw,40px);font-family:'Helvetica Neue',Arial,sans-serif;padding:0 5%;z-index:5}
+    .jys4-services .pill{display:flex;align-items:center;gap:8px;color:#ffffff;font-size:clamp(11px,1.6vw,15px);font-weight:500;letter-spacing:.05em;opacity:0;animation:jys4Fade .8s ease-out both;background:rgba(212,175,55,.12);border:1px solid rgba(212,175,55,.5);padding:8px 16px;border-radius:24px}
+    .jys4-services .pill:nth-child(1){animation-delay:2.0s}
+    .jys4-services .pill:nth-child(2){animation-delay:2.2s}
+    .jys4-services .pill:nth-child(3){animation-delay:2.4s}
+    .jys4-services .pill:nth-child(4){animation-delay:2.6s}
+    .jys4-services .dot{width:6px;height:6px;background:#d4af37;border-radius:50%;animation:jys4Pulse 2s ease-in-out infinite;flex-shrink:0}
+    .jys4-bars{position:absolute;left:5%;top:50%;transform:translateY(-50%);display:flex;align-items:flex-end;gap:5px;height:90px;opacity:.5;z-index:1}
+    .jys4-bars .b{width:8px;background:#d4af37;border-radius:2px 2px 0 0;animation:jys4Rise 1.2s ease-out both,jys4Float 3.5s ease-in-out infinite}
+    .jys4-bars .b:nth-child(1){height:35%;animation-delay:0s,2s}
+    .jys4-bars .b:nth-child(2){height:60%;animation-delay:.1s,2.3s}
+    .jys4-bars .b:nth-child(3){height:45%;animation-delay:.2s,2.6s}
+    .jys4-bars .b:nth-child(4){height:80%;animation-delay:.3s,2.9s}
+    .jys4-bars .b:nth-child(5){height:100%;animation-delay:.4s,3.2s}
+    .jys4-bars2{position:absolute;right:5%;top:50%;transform:translateY(-50%) scaleX(-1);display:flex;align-items:flex-end;gap:5px;height:90px;opacity:.5;z-index:1}
+    .jys4-bars2 .b{width:8px;background:#d4af37;border-radius:2px 2px 0 0;animation:jys4Rise 1.2s ease-out both,jys4Float 3.5s ease-in-out infinite}
+    .jys4-bars2 .b:nth-child(1){height:50%;animation-delay:0s,2.1s}
+    .jys4-bars2 .b:nth-child(2){height:75%;animation-delay:.1s,2.4s}
+    .jys4-bars2 .b:nth-child(3){height:55%;animation-delay:.2s,2.7s}
+    .jys4-bars2 .b:nth-child(4){height:90%;animation-delay:.3s,3s}
+    .jys4-bars2 .b:nth-child(5){height:65%;animation-delay:.4s,3.3s}
+    .jys4-particle{position:absolute;width:3px;height:3px;background:#d4af37;border-radius:50%;box-shadow:0 0 6px #d4af37;animation:jys4Drift 9s linear infinite;bottom:0;z-index:2}
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+    .jys4-cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:24px;animation:jys4Fade 1s ease-out both;animation-delay:1.8s;position:relative;z-index:6}
+    .jys4-cta a{display:inline-flex;align-items:center;gap:6px;padding:10px 22px;border-radius:24px;font-family:'Helvetica Neue',Arial,sans-serif;font-size:14px;font-weight:600;text-decoration:none;transition:transform .2s,box-shadow .2s}
+    .jys4-cta a:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(212,175,55,.3)}
+    .jys4-cta .primary{background:#d4af37;color:#0a1a3a}
+    .jys4-cta .ghost{background:transparent;color:#fff;border:1px solid rgba(212,175,55,.6)}
   </style>
 </head>
 <body>
@@ -1102,88 +1162,53 @@
     </div>
   </nav>
 
-  <!-- ─── HERO ─── -->
+  <!-- ─── HERO (Consultora JYS Animation) ─── -->
   <section id="inicio">
-    <div class="hero-bg"></div>
-    <div class="hero-grid-dots"></div>
-    <div class="hero-inner">
+    <h1 class="sr-only">Animación corporativa de Consultora JYS</h1>
+    <div class="jys4">
+      <div class="jys4-bg"></div>
+      <div class="jys4-grid"></div>
+      <div class="jys4-sweep"></div>
 
-      <!-- Instagram Card -->
-      <div class="ig-card reveal">
-        <div class="ig-card-header">
-          <div class="ig-avatar-wrap">
-            <div class="ig-avatar-ring"></div>
-            <img class="ig-avatar" src="assets/instagram/profile.jpg" alt="Juan Carlos Ferreira" onerror="this.src='data:image/svg+xml,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'80\' height=\'80\'><rect width=\'80\' height=\'80\' fill=\'%231a7c43\'/><text x=\'50%25\' y=\'55%25\' text-anchor=\'middle\' fill=\'white\' font-size=\'28\' font-family=\'sans-serif\'>JC</text></svg>'"/>
-          </div>
-          <div class="ig-info">
-            <div class="ig-name-row">
-              <span class="ig-name">Juan Carlos Ferreira</span>
-              <div class="ig-verified">
-                <svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-              </div>
-            </div>
-            <a href="https://www.instagram.com/excelcontador" target="_blank" class="ig-handle">@excelcontador</a>
-            <span class="ig-category">Servicio empresarial · Paraguay</span>
-          </div>
+      <div class="jys4-corner tl"></div>
+      <div class="jys4-corner tr"></div>
+      <div class="jys4-corner bl"></div>
+      <div class="jys4-corner br"></div>
+
+      <div class="jys4-bars">
+        <div class="b"></div><div class="b"></div><div class="b"></div><div class="b"></div><div class="b"></div>
+      </div>
+      <div class="jys4-bars2">
+        <div class="b"></div><div class="b"></div><div class="b"></div><div class="b"></div><div class="b"></div>
+      </div>
+
+      <div class="jys4-particle" style="left:15%;animation-delay:0s"></div>
+      <div class="jys4-particle" style="left:30%;animation-delay:2s"></div>
+      <div class="jys4-particle" style="left:70%;animation-delay:4s"></div>
+      <div class="jys4-particle" style="left:85%;animation-delay:6s"></div>
+
+      <div class="jys4-center">
+        <div class="jys4-eyebrow">
+          <span class="word">Auditoría</span>
+          <span class="sep"></span>
+          <span class="word">Contabilidad</span>
+          <span class="sep"></span>
+          <span class="word">Sistemas</span>
         </div>
-
-        <div class="ig-stats">
-          <div class="ig-stat">
-            <span class="ig-stat-num">212</span>
-            <span class="ig-stat-label">Posts</span>
-          </div>
-          <div class="ig-stat">
-            <span class="ig-stat-num">4,867</span>
-            <span class="ig-stat-label">Seguidores</span>
-          </div>
-          <div class="ig-stat">
-            <span class="ig-stat-num">392</span>
-            <span class="ig-stat-label">Siguiendo</span>
-          </div>
-        </div>
-
-        <div class="ig-bio">
-          <div class="ig-bio-item">🎓 <span>Lic. en Administración<br/><small>Esp. Auditoría y Gestión Tributaria</small></span></div>
-        </div>
-
-        <div class="ig-buttons">
-          <a href="https://wa.me/595984679106" target="_blank" class="ig-btn ig-btn-whatsapp">
-            <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24" style="vertical-align:middle;margin-right:4px"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-            WhatsApp
-          </a>
-          <a href="#servicios" class="ig-btn ig-btn-secondary">Servicios</a>
-          <a href="https://www.instagram.com/excelcontador" target="_blank" class="ig-btn ig-btn-secondary">Seguir</a>
-        </div>
-
-        <div class="ig-mini-grid">
-          <img src="assets/instagram/post-1.jpg" alt="Post" loading="lazy"/>
-          <img src="assets/instagram/post-2.jpg" alt="Post" loading="lazy"/>
-          <img src="assets/instagram/post-3.jpg" alt="Post" loading="lazy"/>
-          <img src="assets/instagram/post-4.jpg" alt="Post" loading="lazy"/>
-          <img src="assets/instagram/post-5.jpg" alt="Post" loading="lazy"/>
-          <img src="assets/instagram/post-6.jpg" alt="Post" loading="lazy"/>
+        <h2 class="jys4-logo">CONSULTORA JYS</h2>
+        <span class="jys4-rule"></span>
+        <p class="jys4-tag">Precisión. Confianza. <b>Excelencia.</b></p>
+        <div class="jys4-cta">
+          <a href="#servicios" class="primary">Ver servicios</a>
+          <a href="https://wa.me/595984679106" target="_blank" class="ghost">WhatsApp</a>
         </div>
       </div>
 
-      <!-- Hero Bottom -->
-      <div class="hero-bottom reveal">
-        <h1 class="hero-mission">
-          Tu contador de confianza<br/>
-          <em>para cada decisión financiera</em>
-        </h1>
-        <div class="hero-community">
-          +21.500 personas en la comunidad
-        </div>
-        <div class="hero-cta-group">
-          <a href="#servicios" class="btn-primary">
-            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
-            Ver servicios
-          </a>
-          <a href="https://www.instagram.com/excelcontador" target="_blank" class="btn-outline">
-            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-            Instagram
-          </a>
-        </div>
+      <div class="jys4-services">
+        <div class="pill"><span class="dot"></span>Auditoría</div>
+        <div class="pill"><span class="dot"></span>Contabilidad</div>
+        <div class="pill"><span class="dot"></span>Tributario</div>
+        <div class="pill"><span class="dot"></span>Excel BI</div>
       </div>
     </div>
   </section>
@@ -1530,7 +1555,7 @@
         links.style.top = '64px';
         links.style.left = '0';
         links.style.right = '0';
-        links.style.background = 'rgba(8,15,30,0.97)';
+        links.style.background = 'rgba(10,26,58,0.97)';
         links.style.padding = '1rem 2rem';
         links.style.borderBottom = '1px solid rgba(255,255,255,0.07)';
       }
@@ -1610,7 +1635,7 @@
           });
           if (res.ok) {
             btn.textContent = '¡Mensaje enviado! ✓';
-            btn.style.background = '#22a55a';
+            btn.style.background = '#f0c948';
             form.reset();
           } else {
             btn.textContent = 'Error al enviar. Intentá de nuevo.';
