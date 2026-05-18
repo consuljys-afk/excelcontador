@@ -1142,6 +1142,56 @@
     .jys4-cta a:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(212,175,55,.3)}
     .jys4-cta .primary{background:#d4af37;color:#0a1a3a}
     .jys4-cta .ghost{background:transparent;color:#fff;border:1px solid rgba(212,175,55,.6)}
+
+    /* ─── JYS Animation: Mobile fix (sin overlaps) ─── */
+    @media (max-width: 768px) {
+      .jys4 {
+        aspect-ratio: auto;
+        min-height: 0;
+        padding: 70px 5% 30px;
+      }
+      .jys4-center {
+        position: static;
+        inset: auto;
+        padding: 0;
+      }
+      .jys4-services {
+        position: static;
+        margin-top: 26px;
+        padding: 0;
+        gap: 10px;
+      }
+      .jys4-services .pill {
+        font-size: 12px;
+        padding: 6px 12px;
+      }
+      .jys4-bars, .jys4-bars2 { display: none; }
+      .jys4-corner { width: 28px; height: 28px; }
+      .jys4-corner.tl, .jys4-corner.tr { top: 12px; }
+      .jys4-corner.tl, .jys4-corner.bl { left: 12px; }
+      .jys4-corner.tr, .jys4-corner.br { right: 12px; }
+      .jys4-corner.bl, .jys4-corner.br { bottom: 12px; }
+      .jys4-eyebrow {
+        gap: 12px;
+        margin-bottom: 20px;
+      }
+      .jys4-eyebrow .word { font-size: 14px; }
+      .jys4-logo { font-size: clamp(36px, 11vw, 56px); }
+      .jys4-rule { margin: 14px auto; }
+      .jys4-tag { font-size: 14px; }
+      .jys4-cta {
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+        max-width: 260px;
+        margin: 22px auto 0;
+        gap: 10px;
+      }
+      .jys4-cta a {
+        justify-content: center;
+        padding: 12px 20px;
+      }
+    }
   </style>
 </head>
 <body>
